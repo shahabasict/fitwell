@@ -4,6 +4,7 @@ import fitwell_project.com.Fitness_service.dto.UserDto;
 import fitwell_project.com.Fitness_service.feign.UserClient;
 import fitwell_project.com.Fitness_service.model.ExerciseLog;
 import fitwell_project.com.Fitness_service.repository.ExerciseLogRepository;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,11 +27,11 @@ public class FitnessService {
     @Autowired
     private UserClient userClient;
 
-    @Value("${gemini.api.url}")
-    private String geminiApiUrl;
+    @Value("${ninja.api.url}")
+    private String ninjaApiUrl;
 
-    @Value("${gemini.api.key}")
-    private String geminiApiKey;
+    @Value("${ninja.api.key}")
+    private String ninjaApiKey;
 
     private final RestTemplate restTemplate;
 
@@ -46,46 +47,45 @@ public class FitnessService {
             throw new RuntimeException("User not found");
         }
 
-        // Step 2: Prepare the prompt for Gemini API
-        String prompt = String.format("Based on the following data calculate calories burned. User's height: %s cm, weight: %s kg, age: %s years, sex: %s, activity: %s, duration: %s minutes.",
-                user.getHeight(), user.getWeight(), user.getAge(), user.getSex(), activity, duration);
-
-        // Step 3: Send the prompt to Gemini API and get calories burned
+        // Step 2: Send request to Ninja Calories Burned API with only the activity parameter
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + geminiApiKey); // Add your API key here
+        headers.set("X-Api-Key", ninjaApiKey);
 
-        Map<String, String> body = new HashMap<>();
-        body.put("prompt", prompt);
+        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        // Build the API URL with just the activity parameter
+        String url = String.format("%s?activity=%s", ninjaApiUrl, activity);
 
-        HttpEntity<Map<String, String>> request = new HttpEntity<>(body, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity(geminiApiUrl, request, String.class);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
 
-        if (response.getStatusCode() != HttpStatus.OK) {
-            throw new RuntimeException("Error fetching data from Gemini API");
+        if (!response.getStatusCode().is2xxSuccessful()) {
+            throw new RuntimeException("Error fetching data from Ninja API");
         }
 
-        // Assuming Gemini API returns a JSON object with a "caloriesBurned" field
+        // Step 3: Extract calorie data and calculate based on actual duration
         String responseBody = response.getBody();
-        float caloriesBurned = extractCaloriesFromResponse(responseBody);
+        float caloriesPerHour = extractCaloriesPerHourFromResponse(responseBody);
+        float totalCaloriesBurned = (caloriesPerHour / 60) * duration; // Convert to calories based on actual duration
 
-
+        // Step 4: Save the exercise log
         ExerciseLog exerciseLog = new ExerciseLog();
         exerciseLog.setUserId(userId);
         exerciseLog.setActivity(activity);
         exerciseLog.setDuration(duration);
-        exerciseLog.setCaloriesBurned(caloriesBurned);
+        exerciseLog.setCaloriesBurned(totalCaloriesBurned);
         exerciseLog.setCreatedAt(new Timestamp(System.currentTimeMillis()).toLocalDateTime());
 
         return exerciseLogRepository.save(exerciseLog);
     }
 
-    // Helper method to extract calories burned from Gemini API response
-    private float extractCaloriesFromResponse(String responseBody) {
-        // Parse the response and extract the caloriesBurned value
-        // This is a placeholder. Actual implementation depends on the API response structure.
-        // Assuming response is in JSON format like {"caloriesBurned": 200}
-        JSONObject jsonObject = new JSONObject(responseBody);
-        return jsonObject.getFloat("caloriesBurned");
+    // Helper method to extract calories per hour from the Ninja API response
+    private float extractCaloriesPerHourFromResponse(String responseBody) {
+        JSONArray jsonArray = new JSONArray(responseBody);
+        if (jsonArray.length() > 0) {
+            JSONObject firstActivity = jsonArray.getJSONObject(0);
+            return firstActivity.getFloat("calories_per_hour");
+        } else {
+            throw new RuntimeException("No valid data returned from Ninja API");
+        }
     }
+
 }

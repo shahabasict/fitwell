@@ -13,7 +13,7 @@ spring:
   mysql:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-gemini:
+ninja:
   api:
-    url: "https://generativelanguage.googleapis.com"  # Placeholder URL, replace with actual one later
-    key: "AIzaSyAGN1qsN-ffA6FvNtkAirEZWJ98vP2XPs4"
+    url: "https://api.api-ninjas.com/v1/caloriesburned"  # Placeholder URL, replace with actual one later
+    key: "Ku20Azv4AMSMMK7CF878Rg==KT1uuYavj2k4Pfjc"
