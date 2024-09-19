@@ -174,5 +174,9 @@ public class DietService {
         return dietscore;
     }
 
+    public List<Diet> findAllLogs(){
+        return dietRepository.findAll();
+    }
+
 
 }

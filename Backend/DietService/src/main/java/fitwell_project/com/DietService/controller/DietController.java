@@ -60,6 +60,12 @@ public class DietController {
         }
     }
 
+    @GetMapping("/allLog")
+    public ResponseEntity<List<Diet>> findAllLog(){
+        return ResponseEntity.ok(dietService.findAllLogs());
+    }
+
+
     @GetMapping("/score/{userId}")
     public ResponseEntity<Float> getDietScore(@PathVariable int userId) {
         float score = dietService.calculateDietScore(userId);
