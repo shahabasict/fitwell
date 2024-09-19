@@ -59,4 +59,11 @@ public class DietController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/score/{userId}")
+    public ResponseEntity<Float> getDietScore(@PathVariable int userId) {
+        float score = dietService.calculateDietScore(userId);
+        return ResponseEntity.ok(score);
+    }
+
 }

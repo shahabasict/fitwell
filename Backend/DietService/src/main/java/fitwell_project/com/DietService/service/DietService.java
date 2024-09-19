@@ -4,6 +4,8 @@ package fitwell_project.com.DietService.service;
 import fitwell_project.com.DietService.exception.ApiRequestException;
 import fitwell_project.com.DietService.exception.DietLogNotFoundException;
 import fitwell_project.com.DietService.exception.DietNotFoundException;
+import fitwell_project.com.DietService.feign.UserClient;
+import fitwell_project.com.DietService.feign.UserDto;
 import fitwell_project.com.DietService.model.Diet;
 import fitwell_project.com.DietService.repository.DietRepository;
 import org.json.JSONArray;
@@ -25,6 +27,8 @@ import java.util.Optional;
 @Service
 public class DietService {
 
+    private float CALORIEINTAKE = 0;
+
     @Autowired
     private DietRepository dietRepository;
 
@@ -33,6 +37,9 @@ public class DietService {
 
     @Value("${calorie.api.key}")
     private String calorieApiKey;
+
+    @Autowired
+    private UserClient userClient;
 
     private final RestTemplate restTemplate;
 
@@ -49,7 +56,6 @@ public class DietService {
         dietLog.setUserId(userId);
         dietLog.setDiet(dietDescription);
         dietLog.setCalories((int) calories);
-        dietLog.setDate(LocalDate.now());
         dietLog.setCreatedAt(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
 
         return dietRepository.save(dietLog);
@@ -97,6 +103,7 @@ public class DietService {
                 totalCalories += item.getFloat("calories");
             }
 
+            CALORIEINTAKE = totalCalories;
             return totalCalories;
 
         } catch (Exception e) {
@@ -108,7 +115,7 @@ public class DietService {
     public List<Diet> findLogsByUserIdForToday(int userId) {
         LocalDate today = LocalDate.now();
         return dietRepository.findByUserId(userId).stream()
-                .filter(log -> log.getDate().isEqual(today))
+                .filter(log -> log.getCreatedAt().equals(today))
                 .toList();
     }
 
@@ -124,4 +131,48 @@ public class DietService {
     public List<Diet> findLogsByUserId(int userId) {
         return dietRepository.findByUserId(userId);
     }
+
+
+    public float calculateOptimumCalorieIntake(UserDto user) {
+        float bmr;
+        if (user.getGender().equalsIgnoreCase("male")) {
+            bmr = 88.362f + (13.397f * user.getWeight()) + (4.799f * user.getHeight()) - (5.677f * user.getAge());
+        } else {
+            bmr = 447.593f + (9.247f * user.getWeight()) + (3.098f * user.getHeight()) - (4.330f * user.getAge());
+        }
+
+        float activityFactor;
+        switch (user.getActivityLevel().toLowerCase()) {
+            case "sedentary":
+                activityFactor = 1.2f;
+                break;
+            case "lightly active":
+                activityFactor = 1.375f;
+                break;
+            case "moderately active":
+                activityFactor = 1.55f;
+                break;
+            case "very active":
+                activityFactor = 1.725f;
+                break;
+            case "super active":
+                activityFactor = 1.9f;
+                break;
+            default:
+                activityFactor = 1.2f;
+        }
+        return bmr * activityFactor;
+    }
+
+    public float calculateDietScore(int userId) {
+        UserDto user = userClient.getUserById(userId);
+
+        float optimalCalories = calculateOptimumCalorieIntake(user);
+
+        float dietscore = 25 - Math.min(25, Math.abs(CALORIEINTAKE - optimalCalories) / 100);
+        if (dietscore < 0) dietscore = 0;
+        return dietscore;
+    }
+
+
 }

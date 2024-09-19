@@ -2,6 +2,7 @@ package fitwell_project.com.User.service;
 
 import fitwell_project.com.User.exception.OverallScoreNotFoundException;
 import fitwell_project.com.User.exception.UserNotFoundException;
+import fitwell_project.com.User.feign.DietClient;
 import fitwell_project.com.User.feign.FitnessClient;
 import fitwell_project.com.User.model.OverallScore;
 import fitwell_project.com.User.model.User;
@@ -23,7 +24,11 @@ public class OverallScoreService {
 
     @Autowired
     private FitnessClient fitnessClient;
-    
+
+
+    @Autowired
+    private DietClient dietClient;
+
     public List<OverallScore> getAllOverallScores() {
         return overallScoreRepository.findAll();
     }
@@ -39,6 +44,9 @@ public class OverallScoreService {
         if (user == null || user.getId() == 0) {
             throw new UserNotFoundException("User not associated with this overall score or user ID not found.");
         }
+
+        float dietScore = dietClient.getDietScore(user.getId());
+        overallScore.setDietScore(dietScore);
 
         float fitnessScore = fitnessClient.getFitnessScore(user.getId());
         overallScore.setPhysicalScore(fitnessScore);

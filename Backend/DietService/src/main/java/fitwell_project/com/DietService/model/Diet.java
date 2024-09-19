@@ -22,9 +22,6 @@ public class Diet {
     @Column(name = "calories")
     private Integer calories;
 
-    @Column(name = "date")
-    private LocalDate date;
-
     @Column(name = "created_at")
     private Timestamp createdAt;
 
@@ -37,8 +34,6 @@ public class Diet {
     public void setDiet(String diet) { this.diet = diet; }
     public Integer getCalories() { return calories; }
     public void setCalories(Integer calories) { this.calories = calories; }
-    public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
     public Timestamp getCreatedAt() { return createdAt; }
     public void setCreatedAt(Timestamp createdAt) { this.createdAt = createdAt; }
 }

@@ -20,7 +20,7 @@
         @GeneratedValue(strategy = GenerationType.AUTO)
         private int id;
         private String name;
-        private String sex;
+        private String gender;
         private int age;
         private String username;
         private String password;
@@ -45,5 +45,6 @@
         protected void onUpdate() {
             updatedAt = new Date();
         }
+
 
     }
