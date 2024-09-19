@@ -13,7 +13,7 @@ spring:
   mysql:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-calorie:
+ninja:
   api:
-    url: "https://api.calorieninjas.com/v1/nutrition"
+    url: "https://api.api-ninjas.com/v1/caloriesburned"
     key: "Ku20Azv4AMSMMK7CF878Rg==dD9w3BkCef3qPoR2"

@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(DietLogNotFoundException.class)
+    @ExceptionHandler(DietNotFoundException.class)
     public ResponseEntity<String> handleDietLogNotFoundException(DietLogNotFoundException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }

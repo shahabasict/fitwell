@@ -4,6 +4,7 @@ import fitwell_project.com.DietService.exception.ApiRequestException;
 import fitwell_project.com.DietService.exception.DietLogNotFoundException;
 import fitwell_project.com.DietService.model.Diet;
 import fitwell_project.com.DietService.service.DietService;
+;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
