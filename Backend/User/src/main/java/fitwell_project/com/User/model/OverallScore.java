@@ -30,6 +30,8 @@ public class OverallScore {
 
     private float mentalHealthScore;
 
+    private float bmiScore;
+
     private float totalScore;
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/fitness")
 public class FitnessController {
@@ -20,5 +22,25 @@ public class FitnessController {
         ExerciseLog exerciseLog = fitnessService.logExercise(userId, exerciseRequest.getActivity(), exerciseRequest.getDuration());
         return new ResponseEntity<>(exerciseLog, HttpStatus.CREATED);
     }
+
+    @GetMapping("/log/{logId}")
+    public ResponseEntity<ExerciseLog> getLogById(@PathVariable int logId) {
+        ExerciseLog exerciseLog = fitnessService.findLogById(logId);
+        return ResponseEntity.ok(exerciseLog);
+    }
+
+    @GetMapping("/logs/user/{userId}")
+    public ResponseEntity<List<ExerciseLog>> getLogsByUserId(@PathVariable int userId) {
+        List<ExerciseLog> logs = fitnessService.findLogsByUserId(userId);
+        return ResponseEntity.ok(logs);
+    }
+
+    @GetMapping("/score/{userId}")
+    public ResponseEntity<Float> getFitnessScore(@PathVariable int userId) {
+        float score = fitnessService.calculateFitnessScore(userId);
+        return ResponseEntity.ok(score);
+    }
+
+
 }
 

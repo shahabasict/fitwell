@@ -16,4 +16,4 @@ spring:
 ninja:
   api:
     url: "https://api.api-ninjas.com/v1/caloriesburned"
-    key: "Ku20Azv4AMSMMK7CF878Rg==KT1uuYavj2k4Pfjc"
+    key: "Ku20Azv4AMSMMK7CF878Rg==dD9w3BkCef3qPoR2"

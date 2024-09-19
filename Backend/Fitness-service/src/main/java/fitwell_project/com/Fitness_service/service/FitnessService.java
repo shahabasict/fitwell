@@ -1,9 +1,13 @@
 package fitwell_project.com.Fitness_service.service;
 
 import fitwell_project.com.Fitness_service.dto.UserDto;
+import fitwell_project.com.Fitness_service.exception.ExerciseLogNotFoundException;
+import fitwell_project.com.Fitness_service.exception.NoValidDataReturnedException;
+import fitwell_project.com.Fitness_service.exception.UserNotFoundException;
 import fitwell_project.com.Fitness_service.feign.UserClient;
 import fitwell_project.com.Fitness_service.model.ExerciseLog;
 import fitwell_project.com.Fitness_service.repository.ExerciseLogRepository;
+import org.apache.catalina.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +19,12 @@ import org.springframework.web.client.RestTemplate;
 import java.sql.Timestamp;
 
 
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FitnessService {
@@ -58,7 +66,7 @@ public class FitnessService {
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
-            throw new RuntimeException("Error fetching data from Ninja API");
+            throw new UserNotFoundException("Error fetching data from Ninja API");
         }
 
         // Step 3: Extract calorie data and calculate based on actual duration
@@ -84,7 +92,48 @@ public class FitnessService {
             JSONObject firstActivity = jsonArray.getJSONObject(0);
             return firstActivity.getFloat("calories_per_hour");
         } else {
-            throw new RuntimeException("No valid data returned from Ninja API");
+            throw new NoValidDataReturnedException("No valid data returned from Ninja API");
+        }
+    }
+
+    public List<ExerciseLog> findLogsByUserIdForToday(int userId) {
+        LocalDate today = LocalDate.now();
+        return exerciseLogRepository.findByUserId(userId).stream()
+                .filter(log -> log.getCreatedAt().toLocalDate().isEqual(today))
+                .collect(Collectors.toList());
+    }
+
+    public ExerciseLog findLogById(int logId) {
+        Optional<ExerciseLog> log = exerciseLogRepository.findById(logId);
+        if (log.isPresent()) {
+            return log.get();
+        } else {
+            throw new ExerciseLogNotFoundException("Exercise Log not found for id: " + logId);
+        }
+    }
+
+    // Method to find all logs by userId
+    public List<ExerciseLog> findLogsByUserId(int userId) {
+        return exerciseLogRepository.findByUserId(userId);
+    }
+
+
+    public float calculateFitnessScore(int userId) {
+        // Fetch today's logs from the Fitness service
+        List<ExerciseLog> logs = findLogsByUserIdForToday(userId);
+
+        // Calculate total calories burned today
+        Double totalCaloriesBurned = logs.stream()
+                .mapToDouble(ExerciseLog::getCaloriesBurned)
+                .sum();
+
+        // Calculate the score based on the calories burned
+        if (totalCaloriesBurned >= 300) {
+            return 25.0f;
+        } else if (totalCaloriesBurned > 0) {
+            return (float) ((totalCaloriesBurned / 300) * 25);
+        } else {
+            return 0.0f;
         }
     }
 
