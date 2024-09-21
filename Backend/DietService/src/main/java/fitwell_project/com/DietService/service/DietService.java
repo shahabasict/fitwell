@@ -3,7 +3,6 @@ package fitwell_project.com.DietService.service;
 
 import fitwell_project.com.DietService.exception.ApiRequestException;
 import fitwell_project.com.DietService.exception.DietLogNotFoundException;
-import fitwell_project.com.DietService.exception.DietNotFoundException;
 import fitwell_project.com.DietService.feign.UserClient;
 import fitwell_project.com.DietService.feign.UserDto;
 import fitwell_project.com.DietService.model.Diet;
@@ -19,15 +18,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.sql.Timestamp;
+
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import  java.sql.Timestamp;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Service
 public class DietService {
 
-    private float CALORIEINTAKE = 0;
 
     @Autowired
     private DietRepository dietRepository;
@@ -103,7 +110,7 @@ public class DietService {
                 totalCalories += item.getFloat("calories");
             }
 
-            CALORIEINTAKE = totalCalories;
+
             return totalCalories;
 
         } catch (Exception e) {
@@ -112,12 +119,7 @@ public class DietService {
         }
     }
 
-    public List<Diet> findLogsByUserIdForToday(int userId) {
-        LocalDate today = LocalDate.now();
-        return dietRepository.findByUserId(userId).stream()
-                .filter(log -> log.getCreatedAt().equals(today))
-                .toList();
-    }
+
 
     public Diet findLogById(int logId) {
         Optional<Diet> log = dietRepository.findById(logId);
@@ -167,15 +169,28 @@ public class DietService {
     public float calculateDietScore(int userId) {
         UserDto user = userClient.getUserById(userId);
 
+        List<Diet> diets = findLogsByUserIdForToday(userId);
+
+        Double calorieInTake = diets.stream()
+                .mapToDouble(Diet::getCalories)
+                .sum();
+
         float optimalCalories = calculateOptimumCalorieIntake(user);
 
-        float dietscore = 25 - Math.min(25, Math.abs(CALORIEINTAKE - optimalCalories) / 100);
+        float dietscore = 25 - Math.min(25, Math.abs( (calorieInTake.floatValue()) - optimalCalories) / 100);
         if (dietscore < 0) dietscore = 0;
         return dietscore;
     }
 
     public List<Diet> findAllLogs(){
         return dietRepository.findAll();
+    }
+
+    public List<Diet> findLogsByUserIdForToday(int userId) {
+        LocalDate today = LocalDate.now();
+        return dietRepository.findByUserId(userId).stream()
+                .filter(log -> log.getCreatedAt().toLocalDateTime().toLocalDate().isEqual(today))
+                .collect(Collectors.toList());
     }
 
 
