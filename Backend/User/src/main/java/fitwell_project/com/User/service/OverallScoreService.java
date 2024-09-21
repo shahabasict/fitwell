@@ -29,6 +29,9 @@ public class OverallScoreService {
     @Autowired
     private DietClient dietClient;
 
+    @Autowired
+    private MentalHealthService mentalHealthService;
+
     public List<OverallScore> getAllOverallScores() {
         return overallScoreRepository.findAll();
     }
@@ -44,6 +47,9 @@ public class OverallScoreService {
         if (user == null || user.getId() == 0) {
             throw new UserNotFoundException("User not associated with this overall score or user ID not found.");
         }
+
+        float mentalScore = mentalHealthService.calculateAverageScore(user.getId());
+        overallScore.setMentalHealthScore(mentalScore);
 
         float dietScore = dietClient.getDietScore(user.getId());
         overallScore.setDietScore(dietScore);
