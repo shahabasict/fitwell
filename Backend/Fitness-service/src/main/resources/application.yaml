@@ -2,6 +2,8 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: Fitness-Service
   datasource:
     url: jdbc:mysql://localhost:3306/fitwell
     username: root
@@ -17,3 +19,12 @@ ninja:
   api:
     url: "https://api.api-ninjas.com/v1/caloriesburned"
     key: "Ku20Azv4AMSMMK7CF878Rg==KT1uuYavj2k4Pfjc"
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8090/eureka
+    register-with-eureka: true
+    fetch-registry: true

@@ -1,4 +1,8 @@
+
+
 spring:
+  application:
+    name: user-service
   datasource:
     url: jdbc:mysql://localhost:3306/fitwell
     username: root
@@ -8,3 +12,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8090/eureka
+    register-with-eureka: true
+    fetch-registry: true

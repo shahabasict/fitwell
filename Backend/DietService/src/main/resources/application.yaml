@@ -2,6 +2,8 @@ server:
   port: 8082
 
 spring:
+  application:
+    name: dietService
   datasource:
     url: jdbc:mysql://localhost:3306/fitwell
     username: root
@@ -17,3 +19,12 @@ calorie:
   api:
     url: "https://api.calorieninjas.com/v1/nutrition"
     key: "Ku20Azv4AMSMMK7CF878Rg==dD9w3BkCef3qPoR2"
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8090/eureka
+    register-with-eureka: true
+    fetch-registry: true
