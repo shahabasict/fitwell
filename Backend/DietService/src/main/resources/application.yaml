@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: dietService
+    name: Diet-Service
   datasource:
     url: jdbc:mysql://localhost:3306/fitwell
     username: root
