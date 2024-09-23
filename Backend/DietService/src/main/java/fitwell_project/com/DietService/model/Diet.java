@@ -25,6 +25,18 @@ public class Diet {
     @Column(name = "created_at")
     private Timestamp createdAt;
 
+    public Diet(Integer id, Integer userId, String diet, Integer calories, Timestamp createdAt) {
+        this.id = id;
+        this.userId = userId;
+        this.diet = diet;
+        this.calories = calories;
+        this.createdAt = createdAt;
+    }
+
+    public Diet() {
+
+    }
+
     // Getters and setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
