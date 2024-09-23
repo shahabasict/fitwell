@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OverallScoreService {
@@ -24,6 +25,8 @@ public class OverallScoreService {
 
     @Autowired
     private FitnessClient fitnessClient;
+
+
 
 
     @Autowired
@@ -43,25 +46,26 @@ public class OverallScoreService {
 
     public OverallScore createOverallScore(OverallScore overallScore) {
 
-        User user = overallScore.getUser();
-        if (user == null || user.getId() == 0) {
+        Optional<User> user = userRepository.findById(overallScore.getUser().getId());
+        if (!user.isPresent()) {
             throw new UserNotFoundException("User not associated with this overall score or user ID not found.");
+        }else {
+
+            float mentalScore = mentalHealthService.calculateAverageScore(user.get().getId());
+            overallScore.setMentalHealthScore(mentalScore);
+
+            float dietScore = dietClient.getDietScore(user.get().getId());
+            overallScore.setDietScore(dietScore);
+
+            float fitnessScore = fitnessClient.getFitnessScore(user.get().getId());
+            overallScore.setPhysicalScore(fitnessScore);
+
+            float bmiScore = calculateBMIScore(user.get().getBmi());
+            overallScore.setBmiScore(bmiScore);
+
+            float total = overallScore.getPhysicalScore() + overallScore.getDietScore() + overallScore.getMentalHealthScore() + overallScore.getBmiScore();
+            overallScore.setTotalScore(total);
         }
-
-        float mentalScore = mentalHealthService.calculateAverageScore(user.getId());
-        overallScore.setMentalHealthScore(mentalScore);
-
-        float dietScore = dietClient.getDietScore(user.getId());
-        overallScore.setDietScore(dietScore);
-
-        float fitnessScore = fitnessClient.getFitnessScore(user.getId());
-        overallScore.setPhysicalScore(fitnessScore);
-
-        float bmiScore = calculateBMIScore(user.getBmi());
-        overallScore.setBmiScore(bmiScore);
-
-        float total = overallScore.getPhysicalScore()+ overallScore.getDietScore()+ overallScore.getMentalHealthScore()+ overallScore.getBmiScore();
-        overallScore.setTotalScore(total);
         return overallScoreRepository.save(overallScore);
     }
 
