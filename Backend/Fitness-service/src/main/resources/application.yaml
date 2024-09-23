@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/fitwell
     username: root
-    password: pass@word1
+    password: root
   jpa:
     hibernate:
       ddl-auto: update
@@ -28,3 +28,6 @@ eureka:
       defaultZone: http://localhost:8090/eureka
     register-with-eureka: true
     fetch-registry: true
+
+jwt:
+  secret: bf46de53d0281ba765ff3c2d4512b714c8732ac7a36c73ae61739691690bcb0c

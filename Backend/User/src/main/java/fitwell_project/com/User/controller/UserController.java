@@ -1,6 +1,7 @@
 package fitwell_project.com.User.controller;
 
 
+import fitwell_project.com.User.Auth.service.UserAuthService;
 import fitwell_project.com.User.model.User;
 import fitwell_project.com.User.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserAuthService userAuthService;
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -44,4 +48,18 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/register")
+    public User register(@RequestBody User user) {
+        return userAuthService.register(user);
+
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        return userAuthService.login(user);
+    }
+
+
+
 }
