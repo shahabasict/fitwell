@@ -77,7 +77,25 @@ public class FitnessController {
     }
 
     @GetMapping("/score/{userId}")
-    public ResponseEntity<Float> getFitnessScore(@PathVariable int userId) {
+    public ResponseEntity<Float> getFitnessScore(@PathVariable int userId
+    ,@RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
+
+        if (authorizationHeader == null || authorizationHeader.isEmpty()) {
+            throw new AuthorizationException("Authorization header is missing");
+        }
+
+        String token = authorizationHeader.startsWith("Bearer ") ? authorizationHeader.substring(7) : authorizationHeader;
+
+        if(token.isEmpty()){
+            throw new AuthorizationException("Authorization token is missing");
+        }
+
+        boolean credentials = jwtDecoderService.validateToken(token);
+
+        if (!credentials){
+            throw new AuthorizationException("The Token or Authorization you have given is not Authorized");
+        }
+
         float score = fitnessService.calculateFitnessScore(userId);
         return ResponseEntity.ok(score);
     }

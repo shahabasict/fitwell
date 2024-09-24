@@ -1,9 +1,11 @@
 package fitwell_project.com.DietService.controller;
 
 import fitwell_project.com.DietService.exception.ApiRequestException;
+import fitwell_project.com.DietService.exception.AuthorizationException;
 import fitwell_project.com.DietService.exception.DietLogNotFoundException;
 import fitwell_project.com.DietService.model.Diet;
 import fitwell_project.com.DietService.service.DietService;
+import fitwell_project.com.DietService.util.JwtDecoderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +18,31 @@ import java.util.List;
 public class DietController {
 
     @Autowired
+    private JwtDecoderService jwtDecoderService;
+
+    @Autowired
     private DietService dietService;
 
     @PostMapping("/log")
-    public ResponseEntity<Diet> logDiet(@RequestParam int userId, @RequestParam String dietDescription) {
+    public ResponseEntity<Diet> logDiet(@RequestParam int userId, @RequestParam String dietDescription,
+                                        @RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
+
+        if (authorizationHeader == null || authorizationHeader.isEmpty()) {
+            throw new AuthorizationException("Authorization header is missing");
+        }
+
+        String token = authorizationHeader.startsWith("Bearer ") ? authorizationHeader.substring(7) : authorizationHeader;
+        if(token.isEmpty()){
+            throw new AuthorizationException("Authorization token is missing");
+        }
+
+        boolean credentials = jwtDecoderService.validateToken(token);
+
+        if (!credentials){
+            throw new AuthorizationException("The Token or Authorization you have given is not Authorized");
+        }
+
+
         try {
             Diet dietLog = dietService.logDiet(userId, dietDescription);
             return new ResponseEntity<>(dietLog, HttpStatus.CREATED);
