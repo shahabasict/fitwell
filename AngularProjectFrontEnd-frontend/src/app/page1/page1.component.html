@@ -1,0 +1,52 @@
+<div class="background-container" [ngClass]="{ 'login-active': showLogin }">
+  <header class="header">
+    <h1>WELLNESS TRACKER</h1>
+    <div class="auth-buttons">
+      <button class="login-button" (click)="toggleLogin()">Login</button>
+      <button class="signup-button">Sign Up</button>
+    </div>
+  </header>
+
+  <div *ngIf="!showLogin" class="main-content">
+    <div class="image-container">
+      <img src="https://cdn2.geckoandfly.com/wp-content/uploads/2017/07/health-quotes-05.jpg" alt="Wellness Background">
+    </div>
+    <div class="bmi-calculator">
+      <h2>BMI CALCULATOR</h2>
+      <form (ngSubmit)="calculateBMI()">
+        <div class="input-group">
+          <label for="height">Height (cm):</label>
+          <input type="number" id="height" [(ngModel)]="height" name="height" required>
+        </div>
+        <div class="input-group">
+          <label for="weight">Weight (kg):</label>
+          <input type="number" id="weight" [(ngModel)]="weight" name="weight" required>
+        </div>
+        <div class="input-group">
+          <label for="age">Age:</label>
+          <input type="number" id="age" [(ngModel)]="age" name="age" required>
+        </div>
+        <button type="submit" class="calculate-button">CALCULATE</button>
+      </form>
+      <div *ngIf="bmi !== null" class="result">
+        <h3>Your BMI: {{ bmi | number:'1.1-1' }}</h3>
+        <p>{{ getBMICategory() }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showLogin" class="login-form">
+    <h2>Login</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="input-group" >
+        <label for="email">Email:</label>
+        <input type="email" id="email" [(ngModel)]="email" name="email" required>
+      </div>
+      <div class="input-group" >
+        <label for="password">Password:</label>
+        <input type="password" id="password" [(ngModel)]="password" name="password" required>
+      </div>
+      <button type="submit" id = "a" class="submit-button">Submit</button>
+    </form>
+  </div>
+</div>

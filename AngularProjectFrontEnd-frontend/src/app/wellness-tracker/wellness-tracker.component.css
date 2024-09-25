@@ -1,0 +1,201 @@
+/* wellness-tracker.component.css */
+ 
+:root {
+  --primary-green: #4CAF50;
+  --secondary-green: #8BC34A;
+  --dark-green: #2E7D32;
+  --light-green: #C8E6C9;
+  --white: #FFFFFF;
+  --border-color: #2E7D32;
+  --font-family: 'Arial', sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+}
+
+.background-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--white);
+  background-color: var(--primary-green);
+  transition: background-color 0.3s ease;
+}
+
+.login-active, .signup-active {
+  background-color: var(--light-green);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(76, 175, 80, 0.8);
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.auth-buttons button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: transparent;
+  border: 2px solid var(--white);
+  color: var(--white);
+  transition: all 0.3s ease;
+}
+
+.auth-buttons button:hover {
+  background-color: var(--white);
+  color: var(--primary-green);
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 5%;
+  position: relative;
+}
+
+.image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bmi-calculator {
+  position: relative;
+  z-index: 2;
+  width: 200px;
+  background: rgba(200, 230, 201, 0.9);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.login-form, .signup-form {
+  position: relative;
+  z-index: 2;
+  width: 300px;
+  background: rgba(200, 230, 201, 0.9);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin: 50px auto;
+  color: var(--dark-green);
+}
+
+.signup-form {
+  width: 350px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--dark-green);
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 90%;
+  padding: 10px;
+  border: 2px solid black;  /* Always visible black border */
+  border-radius: 5px;
+  background-color: var(--white);
+  color: var(--dark-green);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary-green);  /* Change border color on focus for visual feedback */
+}
+
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-group label {
+  margin-bottom: 5px;
+}
+
+.calculate-button,
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background: var(--dark-green);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.calculate-button:hover,
+.submit-button:hover {
+  background-color: var(--primary-green);
+}
+
+.result {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.result h3 {
+  color: var(--dark-green);
+  margin-bottom: 10px;
+}
+
+.result p {
+  color: var(--dark-green);
+  font-weight: bold;
+}
+
+.radio-group {
+  display: flex;
+  justify-content: flex-start; /* Aligns to the left */
+}
+
+.radio-group label {
+  margin-right: 15px; /* Adds space between the labels */
+}
+
+
+

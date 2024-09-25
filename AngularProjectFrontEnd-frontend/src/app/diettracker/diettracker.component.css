@@ -1,0 +1,75 @@
+.diet-tracker-container {
+  background-color: #e8f5e9; /* Light green background */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.food-container,
+.details-container {
+  background-color: #c8e6c9; /* Slightly darker green background */
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+h1, h2 {
+  color: #2e7d32; /* Dark green */
+  font-family: 'Poppins', sans-serif;
+}
+
+.food-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.food-input input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #4caf50; /* Green border */
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+button {
+  background-color: #4caf50; /* Green button */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #43a047; /* Slightly darker green on hover */
+}
+
+.details-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.calories-container {
+  margin-bottom: 20px;
+}
+
+.foods-suggested-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.foods-suggested,
+.quotes-container {
+  width: 48%;
+  color: #2e7d32; /* Dark green */
+  font-size: 16px;
+}
+
+.calories-container input {
+  padding: 8px;
+  border: 1px solid #4caf50; /* Green border */
+  border-radius: 4px;
+}

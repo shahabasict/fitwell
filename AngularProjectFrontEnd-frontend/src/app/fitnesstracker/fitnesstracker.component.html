@@ -1,0 +1,34 @@
+<div class="fitness-tracker-container">
+  <h1>Fitness Tracker</h1>
+
+  <div class="exercises-container">
+    <h2>What exercise did you do today?</h2>
+    <div class="exercise-input">
+      <select [(ngModel)]="exercises[0].name">
+        <option value="" disabled selected>Select an exercise</option>
+        <option *ngFor="let exercise of exerciseOptions" [value]="exercise">{{ exercise }}</option>
+      </select>
+      <input type="number" [(ngModel)]="exercises[0].count" placeholder="Enter duration in minutes" />
+    </div>
+    <button (click)="submitExercises()">Submit</button>
+  </div>
+
+  <div class="calories-container">
+    <h2>No. of calories burned</h2>
+    <input type="number" [(ngModel)]="caloriesBurned" />
+  </div>
+
+  <div class="exercises-suggested-container" *ngIf="showDetails">
+    <h2>List of exercises suggested for you:</h2>
+    <div class="exercises-suggested" [ngStyle]="{'font-size': '20px'}">
+      Text goes here...
+    </div>
+  </div>
+
+  <div class="quotes-container" *ngIf="showDetails">
+    <h2>Quote:</h2>
+    <div [ngStyle]="{'font-size': '24px'}">
+      {{ quotes[0] }}
+    </div>
+  </div>
+</div>

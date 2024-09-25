@@ -1,0 +1,52 @@
+/* mental-health-tracker.component.css */
+.mental-health-tracker-container {
+    background-color: #e8f5e9; /* Light green background */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .day-entry-container,
+  .feedback-container {
+    background-color: #c8e6c9; /* Slightly darker green background */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  h1, h2 {
+    color: #2e7d32; /* Dark green */
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  textarea {
+    width: 100%;
+    height: 100px;
+    padding: 8px;
+    border: 1px solid #4caf50; /* Green border */
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+  button {
+    background-color: #4caf50; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  button:hover {
+    background-color: #43a047; /* Slightly darker green on hover */
+  }
+
+  textarea {
+    width: 100%;
+    height: 200px; /* Changed from 100px to 200px */
+    padding: 8px;
+    border: 1px solid #4caf50; /* Green border */
+    border-radius: 4px;
+    resize: vertical;
+}

@@ -1,0 +1,25 @@
+<div class="dashboard-container">
+  <h1>Wellness Dashboard</h1>
+  <div class="dashboard-grid">
+    <div class="dashboard-item fitness-tracker" (click)="navigateToFitnessTracker()">
+      <h2>Fitness Tracker</h2>
+    </div>
+    <div class="dashboard-item bmi-calculator" (click)="navigateToBMICalculator()">
+      <h2>BMI Calculator</h2>
+    </div>
+    <div class="dashboard-item diet-tracker" (click)="navigateToDietTracker()">
+      <h2>Diet Tracker</h2>
+    </div>
+    <div class="dashboard-item mental-health-tracker" (click)="navigateToMentalHealthTracker()">
+      <h2>Mental Health Tracker</h2>
+    </div>
+  </div>
+  <div class="health-report">
+    <h2>Generate Your Overall Health Report</h2>
+    <button (click)="generateReport()">Generate Report</button>
+    <div *ngIf="healthPercentage" class="health-percentage">
+      
+      Overall Score: <strong>{{ healthPercentage }} </strong>
+    </div>
+  </div>
+</div>

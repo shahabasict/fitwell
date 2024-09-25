@@ -1,0 +1,56 @@
+.bmi-calculator-container {
+  background-color: #e8f5e9; /* Light green background */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+  margin-top: 100px; /* Center vertically on the page */
+}
+
+h1 {
+  color: #2e7d32; /* Dark green */
+  margin-bottom: 20px;
+}
+
+.input-container {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+input {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #4caf50; /* Green border */
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+button {
+  background-color: #4caf50; /* Green button */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #43a047; /* Slightly darker green on hover */
+}
+
+.result-container {
+  margin-top: 20px;
+  color: #2e7d32; /* Dark green */
+  font-weight: bold;
+}

@@ -1,0 +1,13 @@
+<!-- mental-health-tracker.component.html -->
+<div class="mental-health-tracker-container">
+    <h1>Mental Health Tracker</h1>
+    <div class="day-entry-container">
+      <h2>Tell us something about your day:</h2>
+      <textarea [(ngModel)]="userInput" placeholder="Enter your thoughts here..."></textarea>
+      <button (click)="submitDayEntry()">Submit</button>
+    </div>
+    <div class="feedback-container" *ngIf="showFeedback">
+      <h2>You seem good!!</h2>
+      <p>Try doing this today!</p>
+    </div>
+  </div>
