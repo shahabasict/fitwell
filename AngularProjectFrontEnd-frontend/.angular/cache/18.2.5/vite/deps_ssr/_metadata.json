@@ -1,58 +1,79 @@
 {
-  "hash": "eb526239",
-  "configHash": "636cdaf1",
-  "lockfileHash": "1ea930f1",
-  "browserHash": "7ac10080",
+  "hash": "dbcef51f",
+  "configHash": "d458678c",
+  "lockfileHash": "6b37af70",
+  "browserHash": "93b3a466",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
-      "fileHash": "35b9a619",
+      "fileHash": "b975e45a",
+      "needsInterop": false
+    },
+    "@angular/common/http": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "e1da950c",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "44fea6d3",
+      "fileHash": "366cf7bd",
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
-      "fileHash": "dbccca96",
+      "fileHash": "d20147af",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "0b5f6b78",
+      "fileHash": "201235b8",
       "needsInterop": false
     },
     "@angular/platform-server": {
       "src": "../../../../../node_modules/@angular/platform-server/fesm2022/platform-server.mjs",
       "file": "@angular_platform-server.js",
-      "fileHash": "38cd3c86",
+      "fileHash": "671854f7",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "734ed89d",
+      "fileHash": "7a3e2334",
+      "needsInterop": false
+    },
+    "@google/generative-ai": {
+      "src": "../../../../../node_modules/@google/generative-ai/dist/index.mjs",
+      "file": "@google_generative-ai.js",
+      "fileHash": "864a8cb4",
+      "needsInterop": false
+    },
+    "tslib": {
+      "src": "../../../../../node_modules/tslib/tslib.es6.mjs",
+      "file": "tslib.js",
+      "fileHash": "3e2d7f81",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-MCKTVYNA": {
-      "file": "chunk-MCKTVYNA.js"
+    "xhr2-AQ42KH57": {
+      "file": "xhr2-AQ42KH57.js"
+    },
+    "chunk-GVSHALWY": {
+      "file": "chunk-GVSHALWY.js"
+    },
+    "chunk-NGLHJSQC": {
+      "file": "chunk-NGLHJSQC.js"
     },
     "chunk-PAPLZIXL": {
       "file": "chunk-PAPLZIXL.js"
     },
     "chunk-WL4IQU26": {
       "file": "chunk-WL4IQU26.js"
-    },
-    "xhr2-AQ42KH57": {
-      "file": "xhr2-AQ42KH57.js"
     },
     "chunk-NQ4HTGF6": {
       "file": "chunk-NQ4HTGF6.js"

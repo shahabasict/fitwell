@@ -1,13 +1,29 @@
-<!-- mental-health-tracker.component.html -->
-<div class="mental-health-tracker-container">
-    <h1>Mental Health Tracker</h1>
-    <div class="day-entry-container">
-      <h2>Tell us something about your day:</h2>
-      <textarea [(ngModel)]="userInput" placeholder="Enter your thoughts here..."></textarea>
-      <button (click)="submitDayEntry()">Submit</button>
-    </div>
-    <div class="feedback-container" *ngIf="showFeedback">
-      <h2>You seem good!!</h2>
-      <p>Try doing this today!</p>
-    </div>
+<!-- <div class="mental-health-tracker-container">
+  <h1>Mental Health Tracker</h1>
+  <div class="day-entry-container">
+    <h2>Tell us something about your day:</h2>
+    <textarea [(ngModel)]="userInput" placeholder="Enter your thoughts here..."></textarea>
+    <button (click)="submitDayEntry()">Submit</button>
   </div>
+  <div class="feedback-container" *ngIf="showFeedback">
+    <h2>Suggested Feedback:</h2>
+    <p>Summary of your feelings: {{ answer1 }}</p>
+    <p>Suggested activity: {{ answer2 }}</p>
+    <p>Mental health score: {{ answer3 }}</p>
+  </div>
+</div> -->
+
+<div class="mental-health-tracker-container">
+  <h1>Mental Health Tracker</h1>
+  <div class="day-entry-container">
+    <h2>Tell us something about your day:</h2>
+    <textarea [(ngModel)]="userInput" placeholder="Enter your thoughts here..." id="textinput"></textarea>
+    <button (click)="submitDayEntry()">Submit</button>
+  </div>
+  <div class="feedback-container" *ngIf="showFeedback">
+    <h2>Suggested Feedback:</h2>
+    <p>Summary of your feelings: <strong>{{ answer1 }}</strong></p>
+    <p>Suggested activity: <strong>{{ answer2 }}</strong></p>
+    <!-- <p>Mental health score: <strong>{{ answer3 }}</strong></p> -->
+  </div>
+</div>

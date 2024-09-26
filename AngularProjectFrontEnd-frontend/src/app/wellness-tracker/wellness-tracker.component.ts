@@ -1,8 +1,9 @@
 // wellness-tracker.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { GatewayService } from '../services/gateway.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   templateUrl: './wellness-tracker.component.html',
   styleUrls: ['./wellness-tracker.component.css']
 })
-export class WellnessTrackerComponent {
+export class WellnessTrackerComponent implements OnInit {
   height: number = 0;
   weight: number = 0;
   age: number = 0;
@@ -74,9 +75,28 @@ export class WellnessTrackerComponent {
 
 
   //edited code
-  constructor(private router: Router) {}
+
+
+  constructor(private router: Router , private gateway:GatewayService) {}
+  ngOnInit(): void {
+      console.log('Intializrd')
+      this.gateway.Login();
+  }
 
   onSubmit() {
+
+    console.log("SBMITTED")
+    this.gateway.Login().subscribe(
+      (response:string) => {
+          console.log('Loging function')
+          console.log('User registered successfully!', response);
+      },
+      (error) => {
+          console.error('Error registering user', error);
+      }
+  );
+
+
     // Dummy authentication logic
     if (this.email === 'user@example.com' && this.password === 'password') {
       console.log('Login successful');

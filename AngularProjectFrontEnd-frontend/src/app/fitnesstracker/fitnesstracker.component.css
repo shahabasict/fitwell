@@ -1,79 +1,102 @@
 .fitness-tracker-container {
   background-color: #e8f5e9; /* Light green background */
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px; /* Increased padding */
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Slightly larger shadow */
+  max-width: 800px; /* Set a maximum width for better layout */
+  margin: 20px auto; /* Center the container */
+  font-family: 'Poppins', sans-serif; /* Set the font family */
+}
+
+h1 {
+  font-size: 36px; /* Increased font size for the main title */
+  color: #2e7d32; /* Dark green */
+  margin-bottom: 20px; /* Add some space below the title */
+  text-align: center; /* Center the title */
+}
+
+h2 {
+  font-size: 28px; /* Increased font size for sub-titles */
+  color: #2e7d32; /* Dark green */
+  margin-bottom: 15px; /* Add some space below the sub-titles */
 }
 
 .exercises-container,
-.details-container {
+.calories-container,
+.exercises-suggested-container,
+.quotes-container {
   background-color: #c8e6c9; /* Slightly darker green background */
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-
-h1, h2 {
-  color: #2e7d32; /* Dark green */
-  font-family: 'Poppins', sans-serif;
+  padding: 20px; /* Consistent padding */
+  border-radius: 8px; /* Rounded corners */
+  margin-bottom: 20px; /* Space between sections */
 }
 
 .exercise-input {
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+  flex-direction: column; /* Stack the input elements vertically */
+  margin-bottom: 15px; /* Space below the input section */
 }
 
 .exercise-input select,
 .exercise-input input {
-  padding: 8px;
-  border: 1px solid #4caf50; /* Green border */
-  border-radius: 4px;
-  margin-right: 10px;
+  padding: 10px; /* Increased padding */
+  border: 2px solid #4caf50; /* Thicker green border */
+  border-radius: 4px; /* Rounded corners */
+  margin-bottom: 10px; /* Space between input fields */
+  font-size: 16px; /* Increased font size for inputs */
 }
 
 button {
   background-color: #4caf50; /* Green button */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  margin-right: 10px;
+  color: white; /* White text */
+  border: none; /* Remove border */
+  padding: 12px 24px; /* Increased padding */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 18px; /* Increased font size */
+  font-weight: bold; /* Bold text */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
 }
 
 button:hover {
   background-color: #43a047; /* Slightly darker green on hover */
 }
 
-.details-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.calories-container {
-  margin-bottom: 20px;
-}
-
-.exercises-suggested-container,
-.quotes-container {
-  display: inline-block;
-  width: 48%; /* Keep them side by side */
-  color: #2e7d32; /* Dark green */
-  font-size: 16px;
-}
-
-.exercises-suggested {
-  font-size: 20px; /* Increased font size */
-}
-
-.quotes-container div {
-  font-size: 24px; /* Increased font size */
+.exercises-suggested p,
+.quotes-container p {
+  font-size: 24px; /* Increased font size for exercises and quotes */
+  margin: 10px 0; /* Space between paragraphs */
+  color: #2e7d32; /* Dark green text */
+  text-align: center; /* Center align text */
 }
 
 .calories-container input {
-  padding: 8px;
-  border: 1px solid #4caf50; /* Green border */
-  border-radius: 4px;
+  width: 100%; /* Full width input */
+  padding: 10px; /* Increased padding */
+  border: 2px solid #4caf50; /* Thicker green border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px; /* Increased font size */
+  margin-top: 10px; /* Space above the input field */
+}
+
+.exercises-suggested-container ul {
+  list-style-type: none; /* Remove default bullet points */
+  padding-left: 0; /* Remove left padding */
+}
+
+.exercises-suggested-container ul li {
+  font-size: 24px; /* Increased font size for exercises */
+  margin: 10px 0; /* Space between list items */
+  color: #2e7d32; /* Dark green text */
+  text-align: center; /* Center align text */
+}
+
+.exercises-suggested-container ul li::before {
+  content: ""; /* Remove custom bullet points if any */
+}
+
+#id1
+{
+  font-size:30px;
+  color: black;
 }

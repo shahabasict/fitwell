@@ -1,52 +1,79 @@
-/* mental-health-tracker.component.css */
 .mental-health-tracker-container {
-    background-color: #e8f5e9; /* Light green background */
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .day-entry-container,
-  .feedback-container {
-    background-color: #c8e6c9; /* Slightly darker green background */
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-  }
-  
-  h1, h2 {
-    color: #2e7d32; /* Dark green */
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  textarea {
-    width: 100%;
-    height: 100px;
-    padding: 8px;
-    border: 1px solid #4caf50; /* Green border */
-    border-radius: 4px;
-    resize: vertical;
-  }
-  
-  button {
-    background-color: #4caf50; /* Green button */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  
-  button:hover {
-    background-color: #43a047; /* Slightly darker green on hover */
-  }
+  background-color: #e8f5e9; /* Light green background */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  max-width: 600px; /* Center the container */
+  margin: 20px auto; /* Center horizontally */
+  font-family: 'Poppins', sans-serif;
+}
 
-  textarea {
-    width: 100%;
-    height: 200px; /* Changed from 100px to 200px */
-    padding: 8px;
-    border: 1px solid #4caf50; /* Green border */
-    border-radius: 4px;
-    resize: vertical;
+.day-entry-container,
+.feedback-container {
+  background-color: #c8e6c9; /* Slightly darker green background */
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+h1 {
+  color: #2e7d32; /* Dark green */
+  font-size: 2.5rem; /* Increased font size */
+  margin-bottom: 20px;
+  text-align: center; /* Center the header */
+}
+
+h2 {
+  color: #2e7d32; /* Dark green */
+  font-size: 1.75rem; /* Increased font size */
+  margin-bottom: 15px;
+}
+
+textarea {
+  width: 100%;
+  height: 250px; /* Increased height */
+  padding: 12px; /* Increased padding */
+  border: 2px solid #4caf50; /* Green border */
+  border-radius: 6px;
+  resize: vertical;
+  font-size: 1rem; /* Increased font size */
+}
+
+button {
+  background-color: #4caf50; /* Green button */
+  color: white;
+  border: none;
+  padding: 12px 25px; /* Increased padding */
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem; /* Increased font size */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+button:hover {
+  background-color: #43a047; /* Slightly darker green on hover */
+}
+
+.feedback-container p {
+  font-size: 1.1rem; /* Slightly larger font size for feedback */
+  margin: 5px 0; /* Space between feedback items */
+}
+
+.feedback-container p {
+  font-size: 1.25rem; /* Increased font size for feedback */
+  margin: 5px 0; /* Space between feedback items */
+}
+
+textarea {
+  width: 100%;
+  height: 150px; /* Reduced height for the textarea */
+  padding: 12px; /* Increased padding */
+  border: 2px solid #4caf50; /* Green border */
+  border-radius: 6px;
+  resize: vertical;
+  font-size: 1rem; /* Font size remains the same */
+}
+
+#textinput{
+  padding-right: 0px;
 }

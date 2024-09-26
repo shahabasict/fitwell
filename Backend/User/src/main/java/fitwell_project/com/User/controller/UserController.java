@@ -56,9 +56,11 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return userAuthService.login(user);
+    public ResponseEntity<String> login(@RequestBody User user) {
+        return ResponseEntity.ok(userAuthService.login(user));
+//          return ResponseEntity.ok("Hiii");
     }
+
 
 
 

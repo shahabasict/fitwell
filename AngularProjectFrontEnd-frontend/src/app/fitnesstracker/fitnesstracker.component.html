@@ -13,22 +13,28 @@
     <button (click)="submitExercises()">Submit</button>
   </div>
 
-  <div class="calories-container">
+  <!-- <div class="calories-container">
     <h2>No. of calories burned</h2>
     <input type="number" [(ngModel)]="caloriesBurned" />
+  </div> -->
+
+  <div class="calories-container">
+    <h2>No. of calories burned</h2>
+    <p id = "id1">{{ caloriesBurned }}</p> <!-- Display the calories burned -->
   </div>
+  
 
   <div class="exercises-suggested-container" *ngIf="showDetails">
     <h2>List of exercises suggested for you:</h2>
-    <div class="exercises-suggested" [ngStyle]="{'font-size': '20px'}">
-      Text goes here...
-    </div>
+    <ul class="exercises-suggested">
+      <li *ngFor="let exercise of answer1.split('\n')">{{ exercise }}</li>
+    </ul>
   </div>
 
   <div class="quotes-container" *ngIf="showDetails">
     <h2>Quote:</h2>
-    <div [ngStyle]="{'font-size': '24px'}">
-      {{ quotes[0] }}
+    <div>
+      <p>{{ answer2 }}</p>
     </div>
   </div>
 </div>

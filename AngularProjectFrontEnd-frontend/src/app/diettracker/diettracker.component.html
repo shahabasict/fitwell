@@ -5,22 +5,27 @@
     <div class="food-input" *ngFor="let food of foods; let i = index">
       <input type="text" [(ngModel)]="foods[i].name" placeholder="Food Item">
     </div>
+   
     <button (click)="submitFoods()">Submit</button>
   </div>
   <div class="details-container" *ngIf="showDetails">
     <div class="calories-container">
       <h2>No. of calories gained</h2>
-      <input type="number" [(ngModel)]="caloriesGained">
+      <span class="calories-gained">{{ caloriesGained }}</span> <!-- Updated to add a class for styling -->
     </div>
     <div class="foods-suggested-container">
       <div class="foods-suggested">
         <h2>List of food items suggested for you:</h2>
-        <p [ngStyle]="{'font-size': '20px'}">Text goes here...</p>
+        <ul>
+          <li *ngFor="let item of answer1.split('-'); let i = index" [ngStyle]="{'font-size': '20px'}">
+            {{ item.trim() }}
+          </li>
+        </ul>
       </div>
       <div class="quotes-container">
         <h2>Quote:</h2>
         <div [ngStyle]="{'font-size': '24px'}">
-          {{ quotes[0] }}
+          {{ answer2 }}
         </div>
       </div>
     </div>
