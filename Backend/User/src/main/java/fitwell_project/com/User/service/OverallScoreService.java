@@ -9,6 +9,7 @@ import fitwell_project.com.User.model.User;
 import fitwell_project.com.User.repository.OverallScoreRepository;
 import fitwell_project.com.User.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,29 +45,38 @@ public class OverallScoreService {
                 .orElseThrow(() -> new OverallScoreNotFoundException("Overall Score with id " + id + " not found"));
     }
 
-    public OverallScore createOverallScore(OverallScore overallScore) {
+    public Float createOverallScore(OverallScore overallScore) {
 
         Optional<User> user = userRepository.findById(overallScore.getUser().getId());
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new UserNotFoundException("User not associated with this overall score or user ID not found.");
         }else {
 
+            System.out.println("User Retrieved");
             float mentalScore = mentalHealthService.calculateAverageScore(user.get().getId());
             overallScore.setMentalHealthScore(mentalScore);
+            System.out.println("Mental Score set");
 
             float dietScore = dietClient.getDietScore(user.get().getId());
             overallScore.setDietScore(dietScore);
+            System.out.println("diet Score set");
 
             float fitnessScore = fitnessClient.getFitnessScore(user.get().getId());
             overallScore.setPhysicalScore(fitnessScore);
+            System.out.println("fitness Score set");
 
             float bmiScore = calculateBMIScore(user.get().getBmi());
             overallScore.setBmiScore(bmiScore);
+            System.out.println("bmi Score set");
 
             float total = overallScore.getPhysicalScore() + overallScore.getDietScore() + overallScore.getMentalHealthScore() + overallScore.getBmiScore();
             overallScore.setTotalScore(total);
+
+            System.out.println("total Score set");
+
+            return total;
         }
-        return overallScoreRepository.save(overallScore);
+
     }
 
 

@@ -19,6 +19,9 @@ public class UserAuthService {
     @Autowired
     AuthenticationManager authManager;
 
+    @Autowired
+    UserRepository userRepository;
+
 
     @Autowired
     private JwtService jwtService;
@@ -43,7 +46,9 @@ public class UserAuthService {
 
     public String login(User user) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        String userId = String.valueOf(user.getId());
+        User user1 = userRepository.findByUsername(user.getUsername());
+        String userId = String.valueOf(user1.getId());
+
         String ID = "UID:"+userId;
         if (authentication.isAuthenticated()) {
             return (jwtService.generateToken(user.getUsername())+ID);

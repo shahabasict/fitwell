@@ -28,8 +28,8 @@ public class OverallScoreController {
     }
 
     @PostMapping
-    public ResponseEntity<OverallScore> createOverallScore(@RequestBody OverallScore overallScore) {
-        OverallScore createdOverallScore = overallScoreService.createOverallScore(overallScore);
+    public ResponseEntity<Float> createOverallScore(@RequestBody OverallScore overallScore) {
+        Float createdOverallScore = overallScoreService.createOverallScore(overallScore);
         return ResponseEntity.ok(createdOverallScore);
     }
 
