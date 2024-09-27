@@ -24,7 +24,7 @@ public class UserAuthService {
     private JwtService jwtService;
 
 
-    public User register(User user) {
+    public String register(User user) {
 
         if (user.getId() != 0 && repo.existsById(user.getId())) {
             throw new RuntimeException("A user with this ID already exists.");
@@ -38,17 +38,20 @@ public class UserAuthService {
         float bmi = user.getWeight()/((user.getHeight()/100)* (user.getHeight()/100));
         user.setBmi(bmi);
         repo.save(user);
-        return user;
+        return "User Registered Successfully";
     }
 
     public String login(User user) {
         Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        String userId = String.valueOf(user.getId());
+        String ID = "UID:"+userId;
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(user.getUsername());
+            return (jwtService.generateToken(user.getUsername())+ID);
         } else {
-            return "fail";
+            return null;
         }
     }
+//    public record tokenreturn(String userID, String token){}
 
 
 }

@@ -23,7 +23,7 @@ public class FitnessController {
     private FitnessService fitnessService;
 
     @PostMapping("/log")
-    public ResponseEntity<ExerciseLog> logExercise(@RequestParam int userId, @RequestBody ExerciseRequest exerciseRequest,
+    public ResponseEntity<Float> logExercise(@RequestParam int userId, @RequestBody ExerciseRequest exerciseRequest,
                                                    @RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
 
         if (authorizationHeader == null || authorizationHeader.isEmpty()) {
@@ -41,7 +41,8 @@ public class FitnessController {
             throw new AuthorizationException("The Token or Authorization you have given is not Authorized");
         }
 
-        ExerciseLog exerciseLog = fitnessService.logExercise(userId, exerciseRequest.getActivity(), exerciseRequest.getDuration());
+        Float exerciseLog = fitnessService.logExercise(userId, exerciseRequest.getActivity(), exerciseRequest.getDuration());
+
         return new ResponseEntity<>(exerciseLog, HttpStatus.CREATED);
     }
 

@@ -53,7 +53,10 @@
         <label for="password">Password:</label>
         <input type="password" id="password" [(ngModel)]="password" name="password" required>
       </div>
+      <p id="wrongCredentials" *ngIf="loginError" class="error-message">The Credentials You Entered is Wrong</p>
+
       <button type="submit" class="submit-button">Submit</button>
+      
     </form>
   </div>
 
@@ -86,7 +89,7 @@
       </div>
       <div class="input-group">
         <label for="retypePassword">Retype Password:</label>
-        <input type="password" id="retypePassword" [(ngModel)]="signupData.retypePassword" name="retypePassword" required>
+        <input type="password" id="retypePassword" name="retypePassword" required>
       </div>
       <div class="input-group">
         <label for="signupEmail">Email:</label>

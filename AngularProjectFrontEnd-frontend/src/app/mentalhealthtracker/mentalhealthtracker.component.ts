@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { AuthInterceptor } from '../interceptors/intercept.interceptor';
 
 @Component({
   selector: 'app-mentalhealthtracker',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule ],
   templateUrl: './mentalhealthtracker.component.html',
   styleUrls: ['./mentalhealthtracker.component.css']
 })
@@ -36,6 +37,8 @@ export class MentalhealthtrackerComponent {
     this.handleSubmit();
     this.handleSubmit2();
     this.handleSubmit3();
+    backendCall();
+    
   }
 
   handleSubmit(): void {
@@ -69,4 +72,34 @@ export class MentalhealthtrackerComponent {
       console.log(err);
     });
   }
+
+  logout() {
+    console.log('Logging out...');
+    localStorage.setItem('authToken',"");
+    localStorage.setItem('userId',"");
+    // Implement your logout functionality here
+
+  }
+
+
 }
+function backendCall() {
+  //  let apiUrl = 'http://localhost:8099/diet-service/api/diet/log';
+  // // let cha:string = localStorage.getItem()
+
+  // let userId = JSON["parse"](localStorage.getItem("user") || '{}');
+
+  // console.log(userId);
+
+  // // console.log('Signup submitted:', this.signupData);
+  
+  // //   this.http.post(apiUrl,this.signupData).subscribe({
+  // //         next: (response) => console.log('User registered successfully', response),
+  // //         error: (error) => console.error('Error occurred while registering user', error)
+  // //       });
+  // //       alert("registered succesfull!! you can login now.")
+
+  }
+
+
+

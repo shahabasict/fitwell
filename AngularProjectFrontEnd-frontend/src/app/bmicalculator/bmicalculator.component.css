@@ -54,3 +54,20 @@ button:hover {
   color: #2e7d32; /* Dark green */
   font-weight: bold;
 }
+.logout-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #145a1f; /* Red color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #145a1f; /* Darker red */
+}

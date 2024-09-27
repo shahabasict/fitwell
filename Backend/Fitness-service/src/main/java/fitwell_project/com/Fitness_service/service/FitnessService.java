@@ -47,7 +47,7 @@ public class FitnessService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public ExerciseLog logExercise(int userId, String activity, int duration) {
+    public Float logExercise(int userId, String activity, int duration) {
         // Step 1: Fetch user details from the User microservice
         UserDto user = userClient.getUserById(userId);
 
@@ -81,8 +81,9 @@ public class FitnessService {
         exerciseLog.setDuration(duration);
         exerciseLog.setCaloriesBurned(totalCaloriesBurned);
         exerciseLog.setCreatedAt(new Timestamp(System.currentTimeMillis()).toLocalDateTime());
+        exerciseLogRepository.save(exerciseLog);
 
-        return exerciseLogRepository.save(exerciseLog);
+        return totalCaloriesBurned;
     }
 
     // Helper method to extract calories per hour from the Ninja API response

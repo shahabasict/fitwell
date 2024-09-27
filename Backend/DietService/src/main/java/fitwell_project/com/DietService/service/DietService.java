@@ -48,7 +48,7 @@ public class DietService {
         this.restTemplate = restTemplate;
     }
 
-    public Diet logDiet(int userId, String dietDescription) {
+    public Float logDiet(int userId, String dietDescription) {
         // Step 1: Fetch calorie data from API
         float calories = fetchCaloriesFromApi(dietDescription);
 
@@ -58,8 +58,8 @@ public class DietService {
         dietLog.setDiet(dietDescription);
         dietLog.setCalories((int) calories);
         dietLog.setCreatedAt(Timestamp.valueOf(new Timestamp(System.currentTimeMillis()).toLocalDateTime()));
-
-        return dietRepository.save(dietLog);
+        dietRepository.save(dietLog);
+        return calories;
     }
 
     // Helper method to fetch calories from API

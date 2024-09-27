@@ -35,4 +35,14 @@ export class Page3Component {
     this.healthPercentage = Math.floor(Math.random() * 100); // Example percentage
     console.log('Generating health report...');
   }
+
+  logout() {
+    console.log("page 3 logout is working");
+    localStorage.setItem('authToken',"");
+    // Implement your logout functionality here
+  }
+
+
+
+
 }

@@ -24,7 +24,7 @@ public class DietController {
     private DietService dietService;
 
     @PostMapping("/log")
-    public ResponseEntity<Diet> logDiet(@RequestParam int userId, @RequestParam String dietDescription,
+    public ResponseEntity<Float> logDiet(@RequestParam int userId, @RequestParam String dietDescription,
                                         @RequestHeader(value = "Authorization", required = false) String authorizationHeader) {
 
         if (authorizationHeader == null || authorizationHeader.isEmpty()) {
@@ -44,7 +44,7 @@ public class DietController {
 
 
         try {
-            Diet dietLog = dietService.logDiet(userId, dietDescription);
+            Float dietLog = dietService.logDiet(userId, dietDescription);
             return new ResponseEntity<>(dietLog, HttpStatus.CREATED);
         } catch (ApiRequestException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

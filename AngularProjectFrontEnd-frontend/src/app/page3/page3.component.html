@@ -1,4 +1,5 @@
 <div class="dashboard-container">
+  <button class="logout-button" (click)="logout()">Logout</button>
   <h1>Wellness Dashboard</h1>
   <div class="dashboard-grid">
     <div class="dashboard-item fitness-tracker" (click)="navigateToFitnessTracker()">
@@ -18,7 +19,6 @@
     <h2>Generate Your Overall Health Report</h2>
     <button (click)="generateReport()">Generate Report</button>
     <div *ngIf="healthPercentage" class="health-percentage">
-      
       Overall Score: <strong>{{ healthPercentage }} </strong>
     </div>
   </div>

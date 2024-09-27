@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-fitnesstracker',
@@ -26,9 +28,12 @@ export class FitnesstrackerComponent {
   quotes: string[] = ['Motivational Quote 1', 'Motivational Quote 2', 'Motivational Quote 3'];
   showDetails: boolean = false;
 
-  submitExercises() {
+  constructor(private http: HttpClient) {}
+
+
+  async submitExercises() {
     // Generate a random number for calories burned between 50 and 500 (adjust as needed)
-    this.caloriesBurned = Math.floor(Math.random() * (500 - 50 + 1)) + 50;
+    this.caloriesBurned = await this.backendCall();
     this.showDetails = true;
     this.handleSubmit();
     this.handleSubmit2();
@@ -84,4 +89,51 @@ export class FitnesstrackerComponent {
     let result2 = await this.model.generateContent(this.prompt2);
     return result2.response.text();
   }
+
+  logout() {
+    console.log('Logging out...');
+    localStorage.setItem('authToken',"");
+    localStorage.setItem('userId',"");
+    // Implement your logout functionality here
+  }
+
+ async backendCall(): Promise<number> {
+  let apiUrl = "http://localhost:8099/fitness-service/fitness/log";
+
+  const token = localStorage.getItem("authToken");
+  const user = String(localStorage.getItem("userId"));
+  const userId = parseInt(user, 10);
+
+  if (isNaN(userId) || !token) {
+    console.error('User ID or token is missing.');
+    throw new Error('User ID or token is missing.');
+  }
+
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  });
+
+  const exerciseRequest = this.prepareExerciseRequest();
+  const params = new HttpParams().set('userId', userId.toString());
+
+  try {
+    const response = await lastValueFrom(this.http.post<number>(apiUrl, exerciseRequest, { headers, params }));
+    return response;
+  } catch (error) {
+    console.error('Error logging exercise:', error);
+    throw error;
+  }
+}
+
+private prepareExerciseRequest(): { activity: string, duration: number } {
+  // Combine all exercises into a single string for 'activity'
+  const activity = this.exercises.map(e => `${e.name} (${e.count})`).join(', ');
+
+  // Sum up all counts as 'duration'
+  const duration = this.exercises.reduce((sum, exercise) => sum + exercise.count, 0);
+
+  return { activity, duration };
+}
+
 }

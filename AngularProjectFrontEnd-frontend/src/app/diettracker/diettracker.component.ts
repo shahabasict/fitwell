@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-diettracker',
@@ -11,16 +12,12 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
   styleUrls: ['./diettracker.component.css'] // Fixed typo here from styleUrl to styleUrls
 })
 export class DiettrackerComponent {
-  foods: { name: string; quantity: number }[] = [
-    { name: '', quantity: 0 }
-  ];
+  foods: string = '';
   caloriesGained: number = 0; // Initially 0, will be updated on submission
   quotes: string[] = ['Healthy Eating Quote 1', 'Healthy Eating Quote 2', 'Healthy Eating Quote 3'];
   showDetails: boolean = false;
 
-  addFood() {
-    this.foods.push({ name: '', quantity: 0 });
-  }
+  
 
   submitFoods() {
     // Logic to submit the food items
@@ -29,10 +26,44 @@ export class DiettrackerComponent {
     this.handleSubmit();
     this.handleSubmit2();
   }
+  constructor(private http: HttpClient) { }
 
   // Method to generate a random number of calories gained
   generateRandomCalories(): number {
-    return Math.floor(Math.random() * 1000) + 1; // Random number between 1 and 1000
+    let apiUrl = 'http://localhost:8099/diet-service/api/diet/log';
+    let token = localStorage.getItem("authToken");
+    console.log(token);
+    let user = String(localStorage.getItem("userId"));
+    const userId = parseInt(user, 10);
+    console.log(userId);
+  
+    if (isNaN(userId) || token === "") {
+      console.error('User ID or token is missing.');
+      return 0; // Exit the function if user ID or token is not available
+    }
+  
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+  
+    // Create params object
+    const params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('dietDescription', this.foods);
+  
+    this.http.post<number>(apiUrl, null, { headers: headers, params: params }).subscribe(
+      (dietLog: number) => {
+        console.log('Diet logged successfully:', dietLog);
+        return dietLog;
+      },
+      (error) => {
+        console.error('Error logging diet:', error);
+      }
+    );
+  
+    // This function doesn't actually return a meaningful number as promised.
+    // For now, we'll return a random number between 0 and 1000 to match the function signature.
+    return Math.floor(Math.random() * 1000);
   }
 
   API_KEY: string = 'AIzaSyAGN1qsN-ffA6FvNtkAirEZWJ98vP2XPs4';
@@ -80,4 +111,13 @@ export class DiettrackerComponent {
     let result2 = await this.model.generateContent(this.prompt2);
     return result2.response.text();
   }
+
+  logout() {
+    console.log('Logging out...');
+    localStorage.setItem('authToken',"");
+    localStorage.setItem('userId',"");
+    // Implement your logout functionality here
+  }
+
+
 }

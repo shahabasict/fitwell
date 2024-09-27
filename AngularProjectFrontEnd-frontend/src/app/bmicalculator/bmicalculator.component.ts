@@ -36,6 +36,11 @@ export class BmicalculatorComponent {
   }
 
 
+  logout() {
+    console.log('Logging out...');
+    localStorage.setItem('authToken',"");
+    // Implement your logout functionality here
+  }
 
 
 

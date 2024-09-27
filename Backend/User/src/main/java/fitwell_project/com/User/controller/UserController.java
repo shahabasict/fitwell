@@ -50,15 +50,14 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userAuthService.register(user);
+    public ResponseEntity<String> register(@RequestBody User user) {
+        return ResponseEntity.ok(userAuthService.register(user));
 
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user) {
         return ResponseEntity.ok(userAuthService.login(user));
-//          return ResponseEntity.ok("Hiii");
     }
 
 

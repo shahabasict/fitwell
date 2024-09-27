@@ -4,7 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { GatewayService } from '../services/gateway.service';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Token } from '@angular/compiler';
 
 @Component({
   selector: 'app-wellness-tracker',
@@ -22,6 +24,10 @@ export class WellnessTrackerComponent implements OnInit {
   showSignup: boolean = false;
   email: string = '';
   password: string = '';
+  name: string='';
+
+  loginError: boolean = false; // New variable to track login errors
+  
 
   signupData = {
     name: '',
@@ -29,12 +35,17 @@ export class WellnessTrackerComponent implements OnInit {
     age: 0,
     username: '',
     password: '',
-    retypePassword: '',
     email: '',
     height: 0,
     weight: 0,
     activityLevel: ''
   };
+
+  constructor(private router: Router, private gateway: GatewayService,private http:HttpClient) {}
+
+  ngOnInit(): void {
+    console.log('Initialized');
+  }
 
   calculateBMI() {
     if (this.height > 0 && this.weight > 0) {
@@ -64,54 +75,66 @@ export class WellnessTrackerComponent implements OnInit {
   }
 
   // onSubmit() {
-  //   // Handle login logic here
-  //   console.log('Login submitted:', this.email, this.password);
+  //   console.log("SUBMITTED");
+
+  //   this.gateway.Login(this.email, this.password).subscribe(
+  //     (response: string) => {
+  //       console.log('User logged in successfully!', response);
+  //       this.router.navigate(['/dashboard']);
+  //     },
+  //     (error) => {
+  //       console.error('Error logging in user', error);
+  //     }
+  //   );
   // }
-
-  // onSignupSubmit() {
-  //   // Handle signup logic here
-  //   console.log('Signup submitted:', this.signupData);
-  // }
-
-
-  //edited code
-
-
-  constructor(private router: Router , private gateway:GatewayService) {}
-  ngOnInit(): void {
-      console.log('Intializrd')
-      this.gateway.Login();
-  }
-
   onSubmit() {
+    this.gateway.Login(this.email, this.password).subscribe(
+      (response: any) => {
+        console.log('User logged in successfully!', response);
+       
+       let returnToken = response;
+       const [token, userIdString] = returnToken.split('UID:');
 
-    console.log("SBMITTED")
-    this.gateway.Login().subscribe(
-      (response:string) => {
-          console.log('Loging function')
-          console.log('User registered successfully!', response);
+      // Trim any whitespace
+      const trimmedToken = token.trim();
+      const userId = userIdString.trim(); // Convert to number
+
+      console.log('Token:', trimmedToken);
+      console.log('User ID:', userId);
+
+
+
+
+       console.log('Token : ',token);
+        localStorage.setItem('authToken',token);
+        console.log("token from local Storage",localStorage.getItem("authToken"));
+
+        localStorage.setItem('userId',userId);
+        console.log("ID from local Storage",localStorage.getItem("userId"));
+
+
+
+       
+        
+        this.router.navigate(['/dashboard']);
       },
       (error) => {
-          console.error('Error registering user', error);
+        console.error('Error logging in user', error);
+        this.loginError = true; 
       }
-  );
-
-
-    // Dummy authentication logic
-    if (this.email === 'user@example.com' && this.password === 'password') {
-      console.log('Login successful');
-      this.router.navigate(['/dashboard']);
-    } else {
-      console.log('Login failed');
-      // Handle login failure (e.g., show error message)
-    }
-  }
-
-  onSignupSubmit() {
-    // Dummy signup logic
-    console.log('Signup submitted:', this.signupData);
-    // Assuming signup is always successful for this example
-    this.router.navigate(['/dashboard']);
+    );
   }
   
+
+  onSignupSubmit() {
+    console.log('Signup submitted:', this.signupData);
+  
+    this.http.post('http://localhost:8099/user-service/api/users/register',this.signupData).subscribe({
+          next: (response) => console.log('User registered successfully', response),
+          error: (error) => console.error('Error occurred while registering user', error)
+        });
+        alert("registered succesfull!! you can login now.")
+  }
+
 }
+
