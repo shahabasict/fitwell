@@ -19,11 +19,11 @@ public class MentalHealth {
 
     private float score;
 
-    private enum severity{
-        LOW,
-        MEDIUM,
-        HIGH
-    };
+//    private enum severity{
+//        LOW,
+//        MEDIUM,
+//        HIGH
+//    };
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

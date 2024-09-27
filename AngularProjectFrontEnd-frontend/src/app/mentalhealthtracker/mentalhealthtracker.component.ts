@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { AuthInterceptor } from '../interceptors/intercept.interceptor';
+import { lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-mentalhealthtracker',
@@ -64,10 +66,32 @@ export class MentalhealthtrackerComponent {
     });
   }
 
+  constructor(private http: HttpClient) { }
+
   handleSubmit3(): void {
-    this.loadResult(this.prompt3).then((data) => {
+    this.loadResult(this.prompt3).then(async (data) => {
       console.log(data);
       this.answer3 = data;
+      let apiUrl = "http://localhost:8099/user-service/api/mental-health"
+      let user = String(localStorage.getItem("userId"));
+      const userId = parseInt(user, 10);
+      console.log(userId);
+      let score = parseInt(data, 10);
+
+      if (isNaN(userId) || isNaN(score)) {
+        console.error('Invalid userId or mental health score');
+        return;
+      }
+
+      const mentalHealth = {
+        userId: userId,
+        score: score
+      };
+
+      const response = await lastValueFrom(this.http.post<string>(apiUrl, mentalHealth));
+      // console.log('Mental health logged successfully:', response);
+      
+
     }).catch((err) => {
       console.log(err);
     });
