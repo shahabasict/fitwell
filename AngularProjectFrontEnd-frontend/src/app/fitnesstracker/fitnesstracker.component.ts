@@ -117,6 +117,12 @@ export class FitnesstrackerComponent {
   const exerciseRequest = this.prepareExerciseRequest();
   const params = new HttpParams().set('userId', userId.toString());
 
+
+ 
+
+
+  return Math.floor(Math.random() * 451) + 50;
+
   try {
     const response = await lastValueFrom(this.http.post<number>(apiUrl, exerciseRequest, { headers, params }));
     return response;
