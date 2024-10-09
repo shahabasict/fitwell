@@ -17,7 +17,7 @@ export class MentalhealthtrackerComponent {
   userInput: string = '';
   showFeedback: boolean = false;
 
-  API_KEY: string = 'AIzaSyAGN1qsN-ffA6FvNtkAirEZWJ98vP2XPs4';
+  API_KEY: string = 'AIzaSyB5wWzkbcwaLdKC9yYNGOabfjixwhJIrwQ';
   genAI = new GoogleGenerativeAI(this.API_KEY);
   model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 

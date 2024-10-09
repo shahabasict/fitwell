@@ -40,7 +40,7 @@ export class FitnesstrackerComponent {
   }
 
   // AI related code remains the same...
-  API_KEY: string = 'AIzaSyAGN1qsN-ffA6FvNtkAirEZWJ98vP2XPs4';
+  API_KEY: string = 'AIzaSyB5wWzkbcwaLdKC9yYNGOabfjixwhJIrwQ';
   genAI = new GoogleGenerativeAI(this.API_KEY);
   model = this.genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
@@ -121,7 +121,7 @@ export class FitnesstrackerComponent {
  
 
 
-  return Math.floor(Math.random() * 451) + 50;
+  // return Math.floor(Math.random() * 451) + 50;
 
   try {
     const response = await lastValueFrom(this.http.post<number>(apiUrl, exerciseRequest, { headers, params }));
